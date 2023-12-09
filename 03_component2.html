@@ -1,0 +1,54 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>컴포넌트 유효 범위 증명 예제
+    </title>
+</head>
+<body>
+    <div id="app">
+        <my-component1></my-component1>
+        <my-component2></my-component2>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
+    <script>
+        // 첫 번째 컴포넌트 내용
+        var cmp1 = {
+            template: '<div>첫 번째 지역 컴포넌트: {{ com1Data }}</div>',
+            data: function() {
+                return {
+                    cmp1Data : 100
+                }
+            }
+        };
+
+        // 두 번째 컴포넌트 내용
+        var cmp1 = {
+            template: '<div>두 번째 지역 컴포넌트: {{ com2Data }}</div>',
+            data: function() {
+                return {
+                    cmp2Data : cmp1.data.cmp1Data
+                }
+            }
+        };
+
+        new Vue({
+            el: '#app',
+            // 첫번째 컴포넌트 등록
+            comments: {
+                'my-component1': cmp1,
+                'my-component2': cmp2,
+            }
+        })
+
+        /* 결과 */
+        // 첫 번째 컴포넌트: 100
+        // 두 번째 컴포넌트: 
+
+        /* 설명 */
+        // 이렇게 다른 컴포넌트의 값을 참조하지 못하게 함으로써 뷰에서 미리 정의해 놓은 데이터 전달 방식에 따라 일관된 구조로 애플리케이션을 작성하게 되므로 개발자 개개인의 스타일대로 구성되지 않고, 애플리케이션이 모두 동일한 데이터 흐름을 갖게 되므로 다른 사람의 코드를 빠르게 파악할 수 있어 협업하기에는 좋음
+        
+        
+    </script>
+</body>
+</html>
